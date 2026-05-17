@@ -1,14 +1,17 @@
 steps:
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: bash
   args:
-  - gcloud
-  - functions
-  - deploy
-  - function_cicd
-  - --region=us-central1
-  - --source=.
-  - --trigger-http
-  - --runtime=python311 
-  - --allow-unauthenticated
+  - -c
+  - |
+      gcloud functions deploy function_cicd \
+      --gen2 \
+      --runtime=python311 \
+      --region=us-central1 \
+      --source=. \
+      --entry-point=function_cicd \
+      --trigger-http \
+      --allow-unauthenticated
+
 options:
   logging: CLOUD_LOGGING_ONLY
